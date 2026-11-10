@@ -4,7 +4,7 @@
 ## -------------------------------------------------------------
 ## 1. Import 
 ## -------------------------------------------------------------
-data_finale <- read.csv2("data_finale2.csv", header = TRUE)
+data_finale <- read.csv2("../donnees/data_finale2.csv", header = TRUE)
 dim(data_finale)   # 418 lignes = 418 prélèvements
 
 ## -------------------------------------------------------------

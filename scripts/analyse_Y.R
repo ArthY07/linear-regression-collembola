@@ -9,7 +9,7 @@ Y_choisi <- "S"   # "A", "S", "H" ou "J"
 ## =============================================================
 ## 1. Données
 ## =============================================================
-data <- read.csv2("data_finale2.csv", header = TRUE)
+data <- read.csv2("../donnees/data_finale2.csv", header = TRUE)
 
 # Variables du sol gardées après H1 (tous les VIF < 10)
 variables_sol <- c("Argile", "Limon", "Conduct", "pH.eau", "Carbonates", "Azote", "C.N",

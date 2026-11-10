@@ -1,7 +1,7 @@
 # Dans RStudio : Session > Set Working Directory > To Source File Location
 # Distribution des 4 indices : lequel a une forme en cloche ?
 
-data <- read.csv2("data_finale2.csv", header = TRUE)
+data <- read.csv2("../donnees/data_finale2.csv", header = TRUE)
 data <- data[!is.na(data$Argile), ]   # mêmes 412 prélèvements que les modèles
 
 par(mfrow = c(2, 2))

@@ -2,7 +2,7 @@
 # VIF des variables de chaque modèle retenu
 library(car)
 
-data <- read.csv2("data_finale2.csv", header = TRUE)
+data <- read.csv2("../donnees/data_finale2.csv", header = TRUE)
 d <- data[!is.na(data$Argile), ]   # 412 prélèvements
 
 modeles <- list(

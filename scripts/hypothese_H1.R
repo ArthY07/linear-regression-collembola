@@ -17,7 +17,7 @@ library(corrplot)
 # ---------------------------------------------------------------------
 # 1. Les 27 variables numeriques du sol
 # ---------------------------------------------------------------------
-data <- read.csv2("data_finale2.csv")
+data <- read.csv2("../donnees/data_finale2.csv")
 
 variables_sol <- c("Argile","Limon","Sable","Conduct","pH.eau","Carbonates","Calcaire",
                    "C..orga","Mat_org","Azote","C.N","P2O5","CEC","K2O","MgO","CaO","Na2O",

@@ -9,7 +9,7 @@ Y_choisi <- "S"   # "A", "S", "H" ou "J"
 ## =============================================================
 ## 1. Données communes
 ## =============================================================
-data <- read.csv2("data_finale2.csv", header = TRUE)
+data <- read.csv2("../donnees/data_finale2.csv", header = TRUE)
 
 # Variables du sol gardées après H1 (tous les VIF < 10)
 variables_sol <- c("Argile", "Limon", "Conduct", "pH.eau", "Carbonates", "Azote", "C.N",
@@ -24,7 +24,7 @@ noms_X   <- c(variables_sol, facteurs)
 data_modele <- data[complete.cases(data[, noms_X]),
                     c("Site", "Echantillon", "A", "S", "H", "J", noms_X)]
 dim(data_modele)
-write.csv2(data_modele, "data_modele.csv", row.names = FALSE)
+write.csv2(data_modele, "../donnees/data_modele.csv", row.names = FALSE)
 
 # Pour l'indice choisi : on retire les lignes où il n'existe pas (J vide)
 garde <- !is.na(data_modele[[Y_choisi]])

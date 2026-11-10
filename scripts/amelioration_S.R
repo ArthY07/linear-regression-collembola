@@ -4,7 +4,7 @@
 ## =============================================================
 ## 1. Données
 ## =============================================================
-data <- read.csv2("data_finale2.csv", header = TRUE)
+data <- read.csv2("../donnees/data_finale2.csv", header = TRUE)
 
 variables_sol <- c("Argile", "Limon", "Conduct", "pH.eau", "Carbonates", "Azote", "C.N",
                    "P2O5", "K2O", "MgO", "CaO", "Na2O", "Al", "Cd", "Cu", "Fe", "Mn",

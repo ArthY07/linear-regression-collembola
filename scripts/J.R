@@ -15,7 +15,7 @@
 # ---------------------------------------------------------------------
 # 1. Donnees
 # ---------------------------------------------------------------------
-data <- read.csv2("data_finale2.csv")
+data <- read.csv2("../donnees/data_finale2.csv")
 
 # Les 20 variables du sol gardees apres H1 (voir hypothese_H1.R)
 variables_sol <- c("Argile","Limon","Conduct","pH.eau","Carbonates","Azote","C.N",

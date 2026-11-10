@@ -22,7 +22,7 @@ library(glmnet)    # Lasso, Ridge, Elastic Net  -> install.packages("glmnet")
 # ---------------------------------------------------------------------
 # 0. Donnees
 # ---------------------------------------------------------------------
-data <- read.csv2("data_finale2.csv")
+data <- read.csv2("../donnees/data_finale2.csv")
 
 # 20 variables du sol gardees apres H1 (voir hypothese_H1.R)
 var_H1 <- c("Argile","Limon","Conduct","pH.eau","Carbonates","Azote","C.N",

@@ -2,8 +2,8 @@
 library(vegan)
 
 # 1. Lire les deux fichiers
-faune <- read.csv2("collembola_data_year1_train.csv")
-sites <- read.csv2("BISES_data_sites.csv", fileEncoding = "UTF-8-BOM")
+faune <- read.csv2("../donnees/collembola_data_year1_train.csv")
+sites <- read.csv2("../donnees/BISES_data_sites.csv", fileEncoding = "UTF-8-BOM")
 
 # 2. Enlever la colonne X (simple numero de ligne, inutile)
 faune$X <- NULL
@@ -32,4 +32,4 @@ data_finale2 <- merge(indices, sites, by = "Site")
 
 # 7. Verifier et sauvegarder (418 lignes, 36 colonnes)
 dim(data_finale2)
-write.csv2(data_finale2, "data_finale2.csv", row.names = FALSE, quote = FALSE)
+write.csv2(data_finale2, "../donnees/data_finale2.csv", row.names = FALSE, quote = FALSE)

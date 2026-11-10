@@ -5,12 +5,12 @@
 ## ---------------------------------
 ## Importation des données
 
-data1 <- read.csv2("collembola_data_year1_train.csv", header= TRUE)
+data1 <- read.csv2("../donnees/collembola_data_year1_train.csv", header= TRUE)
 dim(data1)
 str(data1)
 
 
-data_site <- read.csv2("BISES_data_sites.csv",  header= TRUE)
+data_site <- read.csv2("../donnees/BISES_data_sites.csv",  header= TRUE)
 dim(data_site)
 str(data_site)
 

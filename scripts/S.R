@@ -17,7 +17,7 @@ library(leaps)
 # 1. Preparation des donnees
 ############################################################
 
-data <- read.csv2("data_finale2.csv")
+data <- read.csv2("../donnees/data_finale2.csv")
 
 indices <- c("A", "S", "H", "J")
 ids <- c("Site", "Echantillon")
