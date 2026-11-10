@@ -4,7 +4,7 @@
 ## -------------------------------------------------------------
 ## 1. Import 
 ## -------------------------------------------------------------
-data_finale <- read.csv2("data_finale.csv", header = TRUE)
+data_finale <- read.csv2("data_finale2.csv", header = TRUE)
 dim(data_finale)   # 418 lignes = 418 prélèvements
 
 ## -------------------------------------------------------------
@@ -38,7 +38,7 @@ summary(sites_X[, noms_X])
 ## -------------------------------------------------------------
 ## 4. Distribution de chaque variable du sol 
 ## -------------------------------------------------------------
-# Même boucle que le TP1 : un histogramme par variable, 9 par page.
+# Un histogramme par variable, 9 par page.
 k <- length(noms_X)
 par(mfrow = c(3, 3))
 for (i in 1:k) {
@@ -64,7 +64,7 @@ pairs(sites_X[, calcaire_pH],   pch = 20, cex = 0.5, main = "Calcaire et pH")
 pairs(sites_X[, nutriments],    pch = 20, cex = 0.5, main = "Nutriments")
 pairs(sites_X[, metaux],        pch = 20, cex = 0.5, main = "Métaux")
 
-# Version GGally du TP1 (si le package est installé : install.packages("GGally"))
+# Version GGally (si le package est installé : install.packages("GGally"))
 library(GGally)
 ggpairs(sites_X[, metaux])
 
