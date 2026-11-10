@@ -9,7 +9,7 @@ Branche : `prediction-J` · Script qui produit tous les chiffres : `S_H1.R` · D
 - **Variables qui influencent S :**
   1. **Type d'endroit** : les jardins (JP) ont **+1,37 espèce** par rapport à FU (p = 0,0008). LV, PU et RP ne se distinguent pas de FU.
   2. **Ville** : MO est la plus riche. NS (−1,05), NY (−0,67) et PA (−1,03) ont environ une espèce de moins (p < 0,04).
-  3. Le **pH** apparaît faiblement (BIC, best subset, Lasso). Aucune autre variable du sol n'est retenue de façon stable.
+  3. Le **pH** apparaît faiblement (stepwise BIC, Lasso). Aucune autre variable du sol n'est retenue de façon stable.
 - **Pouvoir explicatif faible** : R² ajusté = 0,086 ; R² sur sites nouveaux = 0,038. Le sol explique peu S ; le lieu compte plus que la chimie du sol.
 
 ## Pipeline
@@ -20,10 +20,9 @@ data_finale2.csv (418 pots, 140 sites)
  2. H1 (hypothese_H1.R)         rang, corrélations, VIF → 27 → 20 variables du sol
  3. Modèle complet              S ~ 20 variables + land_use + city
  4. H2 / H3 sur le modèle complet
- 5. Sélection                   stepwise (forward, backward, both ; AIC et BIC),
-                                best subset (R² ajusté, Cp, BIC), Lasso, Elastic Net, Ridge
- 6. Comparaison                 R², R² ajusté, AIC, BIC, PRESS, R² sur sites nouveaux
- 7. Modèle final + H2 / H3
+ 5. Sélection                   stepwise AIC, stepwise BIC, Lasso
+ 6. Comparaison                 R² ajusté, R² sur sites nouveaux
+ 7. Modèle final + H2 / H3      → variables les plus influentes
  8. Comparaison avec les variantes de l'équipe
 ```
 
@@ -85,40 +84,50 @@ C'est typique d'un comptage. Les transformations log(S+1) et √S ont été test
 
 ## 5–6. Sélection et comparaison des modèles
 
-| Modèle | Nb coef | R² | R² ajusté | AIC | BIC | PRESS | R² sur sites nouveaux | Variables |
-|---|---|---|---|---|---|---|---|---|
-| Complet | 27 | 0,126 | 0,064 | 1788,6 | 1905,2 | 1845 | −0,230 | toutes |
-| Forward AIC | 7 | 0,101 | 0,086 | 1759,9 | 1796,1 | 1721 | **0,038** | city, land_use |
-| Backward AIC | 10 | 0,115 | **0,093** | **1759,4** | 1807,7 | **1713** | −0,007 | pH, Azote, K2O, CaO, Cd, Cu, land_use |
-| **Both AIC** | 7 | 0,101 | 0,086 | 1759,9 | 1796,1 | 1721 | **0,038** | **city, land_use** |
-| Both BIC | 1 | 0,041 | 0,038 | 1774,8 | **1786,9** | 1782 | 0,024 | pH |
-| Lasso | 3 | 0,057 | – | – | – | – | 0,005 | pH, Carbonates, JP |
-| Elastic Net | 4 | 0,059 | – | – | – | – | 0,005 | pH, Carbonates, Na2O, JP |
-| Ridge | 27 | 0,051 | – | – | – | – | 0,006 | toutes (réduites) |
+On compare 4 méthodes avec deux scores :
+- **R² ajusté** : la part de S expliquée, pénalisée par le nombre de variables (plus grand = mieux) ;
+- **R² sur sites nouveaux** : la capacité à prédire des sites jamais vus (plus grand = mieux).
 
-**Best subset** : le BIC est minimal à 2 termes (pH + JP), le Cp de Mallows à 6, le R² ajusté à 9.
+| Méthode | R² ajusté | R² sur sites nouveaux | Variables gardées |
+|---|---|---|---|
+| Modèle complet (tout garder) | 0,064 | −0,230 | toutes |
+| **Stepwise AIC** | **0,086** | **0,038** | **city, land_use** |
+| Stepwise BIC (plus sévère) | 0,038 | 0,024 | pH |
+| Lasso | – | 0,005 | pH, Carbonates, JP |
 
-**Choix : Both AIC (= Forward AIC).**
-- C'est le **meilleur R² sur sites nouveaux**, et il est 2ᵉ ou presque à égalité sur le R² ajusté, l'AIC, le BIC et le PRESS.
-- Backward AIC est légèrement meilleur sur ses propres données, mais il **ne se généralise pas** (−0,007) : il sur-apprend.
-- Lasso, Elastic Net et Ridge prédisent moins bien. Ils **confirment** cependant l'importance de JP et du pH.
+**Choix : stepwise AIC.**
+- C'est le **meilleur sur les deux scores**.
+- Le modèle complet prédit moins bien que la moyenne sur des sites nouveaux : avec trop de variables, il apprend le bruit.
+- Le Lasso et le BIC gardent d'autres variables, mais **confirment** que JP et le pH sont les seules pistes en plus de la ville.
 
 ## 7. Modèle final : `S ~ city + land_use`
 
-R² = 0,101 ; R² ajusté = 0,086 ; Fisher p = 2,7e−07.
+R² ajusté = 0,086 ; test de Fisher p = 2,7e−07 (le modèle est globalement significatif).
 
-| Coefficient | Estimation | IC 95 % | p |
+Références : ville **MO** et usage **FU**. Chaque effet se lit « par rapport à MO » ou « par rapport à FU ».
+
+| Effet | Espèces en plus / en moins | p | Significatif ? |
 |---|---|---|---|
-| Constante (MO, FU) | 3,73 | [3,11 ; 4,35] | < 2e−16 |
-| city NS | −1,05 | [−1,55 ; −0,55] | 5e−05 |
-| city NY | −0,67 | [−1,16 ; −0,17] | 0,008 |
-| city PA | −1,03 | [−1,99 ; −0,06] | 0,037 |
-| **land_use JP** | **+1,37** | [0,58 ; 2,17] | 0,0008 |
-| land_use LV | −0,14 | [−0,88 ; 0,60] | 0,71 |
-| land_use PU | +0,06 | [−0,60 ; 0,72] | 0,86 |
-| land_use RP | +0,14 | [−0,61 ; 0,89] | 0,71 |
+| **Jardins (JP)** | **+1,37** | 0,0008 | ✅ |
+| Ville NS | −1,05 | 0,00005 | ✅ |
+| Ville PA | −1,03 | 0,037 | ✅ |
+| Ville NY | −0,67 | 0,008 | ✅ |
+| Usage RP | +0,14 | 0,71 | ❌ |
+| Usage LV | −0,14 | 0,71 | ❌ |
+| Usage PU | +0,06 | 0,86 | ❌ |
 
-Les références sont la ville MO et l'usage FU. H2 et H3 sur le modèle final donnent le même constat qu'en section 4 (ncvTest p = 0,0005 ; Shapiro p = 3e−05).
+H2 et H3 sur le modèle final donnent le même constat qu'en section 4 : légère hétéroscédasticité et légère asymétrie.
+
+## Les variables les plus influentes sur S
+
+| Rang | Variable | Effet | Retrouvée par |
+|---|---|---|---|
+| 🥇 | **Type d'endroit : jardins (JP)** | **+1,4 espèce** par rapport aux autres usages | toutes les méthodes |
+| 🥈 | **Ville** | MO est la plus riche ; NS, NY et PA ont 0,7 à 1 espèce de moins | stepwise AIC |
+| 🥉 | **pH** | effet positif faible | stepwise BIC, Lasso |
+| – | Autres variables du sol (métaux, azote, texture…) | aucun effet stable | – |
+
+**En une phrase : le lieu (type d'endroit et ville) influence plus la richesse en collemboles que la chimie du sol.**
 
 ## 8. Comparaison avec les variantes de l'équipe
 
