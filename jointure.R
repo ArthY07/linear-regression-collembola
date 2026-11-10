@@ -1,4 +1,4 @@
-setwd("C:/Users/arthu/OneDrive/Bureau/JDATA")
+# Dans RStudio : Session > Set Working Directory > To Source File Location
 library(vegan)
 
 # 1. Lire les deux fichiers
@@ -26,8 +26,10 @@ faune$J[faune$S <= 1] <- NA   # J n'existe pas avec 0 ou 1 espece
 faune$Site <- sub("_[0-9]+$", "", faune$Echantillon)
 
 # 6. Jointure pot par pot : chaque pot recoit le sol de son site
-data_finale <- merge(faune, sites, by = "Site")
+#    On garde : identifiants + indices A, S, H, J + toutes les colonnes du sol
+indices <- faune[, c("Site", "Echantillon", "A", "S", "H", "J")]
+data_finale2 <- merge(indices, sites, by = "Site")
 
-# 7. Verifier et sauvegarder
-dim(data_finale)
-write.csv2(data_finale, "data_finale.csv", row.names = FALSE)
+# 7. Verifier et sauvegarder (418 lignes, 36 colonnes)
+dim(data_finale2)
+write.csv2(data_finale2, "data_finale2.csv", row.names = FALSE, quote = FALSE)
