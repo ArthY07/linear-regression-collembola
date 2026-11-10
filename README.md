@@ -8,7 +8,6 @@ Journée data science : prédire des indices de diversité des collemboles (A, S
 donnees/      les données
 scripts/      les scripts R
 graphiques/   les graphiques produits par les scripts
-rapports/     les rapports de l'équipe
 ```
 
 ### donnees/
@@ -33,9 +32,6 @@ rapports/     les rapports de l'équipe
 | `vif_modeles.R` | VIF des modèles retenus |
 | `graphiques_diapo.R` | graphiques de la présentation |
 | `bayes.R` | régression bayésienne (dépend d'objets `data_clean` et `X_vars` à créer avant) |
-
-### rapports/
-- `RAPPORT_S.md`, `rapport_analyse_S.md`, `RAPPORT_raphael.txt`
 
 ## Lancer un script
 
