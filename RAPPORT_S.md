@@ -1,4 +1,4 @@
-# Rapport : modélisation de la richesse S des collembolles
+# Rapport : modélisation de la richesse S des collemboles
 
 Branche : `prediction-J` · Script qui produit tous les chiffres : `S_H1.R` · Données : `data_finale2.csv`
 
