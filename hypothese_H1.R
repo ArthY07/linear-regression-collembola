@@ -10,14 +10,14 @@
 #   - mais VIF tres eleves -> on retire les variables redondantes
 # =====================================================================
 
-setwd("C:/Users/arthu/OneDrive/Bureau/JDATA")
+# Dans RStudio : Session > Set Working Directory > To Source File Location
 library(corrplot)
 
 
 # ---------------------------------------------------------------------
 # 1. Les 27 variables numeriques du sol
 # ---------------------------------------------------------------------
-data <- read.csv2("data_finale.csv")
+data <- read.csv2("data_finale2.csv")
 
 variables_sol <- c("Argile","Limon","Sable","Conduct","pH.eau","Carbonates","Calcaire",
                    "C..orga","Mat_org","Azote","C.N","P2O5","CEC","K2O","MgO","CaO","Na2O",
